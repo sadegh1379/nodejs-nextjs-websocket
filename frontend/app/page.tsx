@@ -7,7 +7,7 @@ export default function Home() {
   const socketRef = useRef<WebSocket | null>(null);
 
   useEffect(() => {
-    socketRef.current = new WebSocket("ws://localhost:5000?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODFjOTViMGRkYTg4M2MzNmU5MDEzYTgiLCJpYXQiOjE3NDY3MzM5MjcsImV4cCI6MTc0NzMzODcyN30.XZ7uq3_eAhr9Kn4h_J5IHH7rCFBYtoRAila7M7PWNGU"); // replace with your WebSocket URL
+    socketRef.current = new WebSocket("ws://localhost:5000?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODIxYWUwNjhhYzEzZjZjY2Y5MzBlMjkiLCJpYXQiOjE3NDcwMzg4MTAsImV4cCI6MTc0NzY0MzYxMH0.x4TBQZoFtD_iEw-nSuf-s4rwpWn08PGBSz53OwDK848"); // replace with your WebSocket URL
 
     socketRef.current.onopen = () => {
       console.log("WebSocket connected");

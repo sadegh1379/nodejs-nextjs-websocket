@@ -5,7 +5,9 @@ import { wssSend } from '../socket/socket';
 export const getUsers = async (_req: Request, res: Response) => {
   try {
     const users = await User.find();
-    wssSend({ type: "userStatus", userId: "681c95b0dda883c36e9013a8", data: `hello user ${Math.floor(Math.random() * 1000)}` })
+    // test 1 => 6821ae068ac13f6ccf930e29
+    // test2 => 6821ae0a8ac13f6ccf930e2c
+    wssSend({ type: "userStatus", userId: "6821ae068ac13f6ccf930e29", data: `hello user ${Math.floor(Math.random() * 1000)}` })
     res.json(users);
   } catch (err) {
     res.status(500).json({ message: 'خطا در دریافت کاربران' });
