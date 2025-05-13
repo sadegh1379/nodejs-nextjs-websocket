@@ -1,3 +1,4 @@
 export const enum SOCKET_TYPE {
-    POST = 'post'
+    POST = 'post',
+    USER_PROFILE = 'user-profile'
 }

@@ -2,13 +2,7 @@ import { Request, Response } from 'express';
 import User from '../models/user.model';
 import { wssSend } from '../socket/socket';
 import { SOCKET_TYPE } from '../socket/socket-type-enum';
-
-type Post = {
-  id: number;
-  userId: number;
-  title: string;
-  body: string;
-}
+import { Post, UserProfile  } from './types';
 
 export const getUsers = async (_req: Request, res: Response) => {
   try {
@@ -20,6 +14,10 @@ export const getUsers = async (_req: Request, res: Response) => {
       userId: 2,
       title: `this post edited ${Math.random().toString(36).substring(7)}`,
       body: `this post edited by websocket ${Math.random().toString(36).substring(7)}`,
+    }})
+
+    wssSend<Partial<UserProfile>>({ type: SOCKET_TYPE.USER_PROFILE, userId: "6821ae068ac13f6ccf930e29", data: {
+      email: "websocket@gmail.com"
     } })
 
     res.json(users);
