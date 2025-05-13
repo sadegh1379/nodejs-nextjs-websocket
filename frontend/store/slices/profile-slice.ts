@@ -1,4 +1,7 @@
 "use client"
+import { SOCKET_TYPE } from '@/socket/socket-type-enum';
+import { closeWebSocket, getWebSocket } from '@/socket/socketManager';
+import { messageEventData } from '@/socket/types';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export interface User {
@@ -16,6 +19,37 @@ export const userApi = createApi({
   endpoints: (build) => ({
     getUserProfile: build.query<User, void>({
       query: () => `users/1`,
+      async onCacheEntryAdded(
+        arg,
+        { updateCachedData, cacheDataLoaded, cacheEntryRemoved }
+      ) {
+        const socket = getWebSocket();
+
+        try {
+          await cacheDataLoaded;
+
+          const listener = (event: MessageEvent) => {
+            const message = JSON.parse(
+              event.data as string
+            ) as messageEventData<User>;
+
+            if (message.type === SOCKET_TYPE.USER_PROFILE) {
+              console.log("user profile socket data => ", message.data);
+              updateCachedData((draft) => {
+                Object.assign(draft, message.data);
+              });
+            }
+          };
+
+          socket.addEventListener("message", listener);
+        } catch {
+          // no-op in case `cacheEntryRemoved` resolves before `cacheDataLoaded`,
+          // in which case `cacheDataLoaded` will throw
+        }
+
+        await cacheEntryRemoved;
+        closeWebSocket();
+      },
     }),
   }),
 })
