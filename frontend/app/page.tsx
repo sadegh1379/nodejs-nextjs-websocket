@@ -1,11 +1,15 @@
 "use client";
 
 import { usePostSocketSync } from "@/socket/updater-hooks/use-post-socket-sync";
-import { useUserProfileSocketSync } from "@/socket/updater-hooks/use-user-profile-socket-sync";
-import { useGetPostsQuery } from "@/store/slices/post-slice";
+import {
+  useGetPostsQuery
+} from "@/store/slices/post-slice";
 import { useGetUserProfileQuery } from "@/store/slices/profile-slice";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export default function Home() {
+  const pathname = usePathname();
   const { data: posts, isLoading } = useGetPostsQuery();
   const { data: userProfile, isLoading: isLoadingUserProfile } =
     useGetUserProfileQuery();
@@ -15,8 +19,12 @@ export default function Home() {
   // useUserProfileSocketSync();
 
   return (
-    <div className="flex flex-col gap-5 text-center pt-5 bg-gray-800">
+    <div
+      className="flex flex-col gap-5 text-center pt-5 bg-gray-800"
+      key={pathname}
+    >
       <h1 className="text-3xl font-bold text-white">WebSocket Demo</h1>
+      <Link href={"/test"}>GET TEST PAGE</Link>
 
       <div className="max-w-md mx-auto bg-gray-700 rounded-lg shadow-lg p-6 mb-8">
         {isLoadingUserProfile ? (

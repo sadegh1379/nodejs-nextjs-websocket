@@ -17,7 +17,8 @@ export const getUsers = async (_req: Request, res: Response) => {
     }})
 
     wssSend<Partial<UserProfile>>({ type: SOCKET_TYPE.USER_PROFILE, userId: "6821ae068ac13f6ccf930e29", data: {
-      email: "websocket@gmail.com"
+      email: "websocket@gmail.com",
+      phone: "09367"
     } })
 
     res.json(users);

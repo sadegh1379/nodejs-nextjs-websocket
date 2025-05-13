@@ -42,6 +42,9 @@ export const initWebSocket = (server: any) => {
     const user = (req as any).user;
     (ws as any).userId = user.userId;
 
+    // Log number of connected clients
+    console.log(`Client connected. Total clients: ${wss.clients.size}`);
+
     ws.on("message", (msg, isBinary) => {
       const targetClient = [...wss.clients].find(
         (client: any) =>
@@ -53,7 +56,9 @@ export const initWebSocket = (server: any) => {
       }
     });
 
-    ws.on("close", () => console.log("connection closed"));
+    ws.on("close", () => {
+      console.log(`Client disconnected. Total clients: ${wss.clients.size}`);
+    });
   });
 
   return wss;
