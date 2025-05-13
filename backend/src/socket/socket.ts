@@ -1,12 +1,14 @@
 import { WebSocketServer, WebSocket } from 'ws';
 import jwt from 'jsonwebtoken';
 import { IncomingMessage } from 'http';
+import { socketWssSend } from './types';
 
 let wss: WebSocketServer;
 
 export const initWebSocket = (server: any) => {
   wss = new WebSocketServer({ noServer: true });
 
+  // upgrade and set user token
   server.on("upgrade", (req: Request, socket: any, head: Headers) => {
     socket.on("error", (err: any) => console.log("socket error:", err));
     // @ts-ignore
@@ -35,6 +37,7 @@ export const initWebSocket = (server: any) => {
     });
   });
 
+  // get client message
   wss.on("connection", (ws: WebSocket, req: IncomingMessage) => {
     const user = (req as any).user;
     (ws as any).userId = user.userId;
@@ -56,7 +59,8 @@ export const initWebSocket = (server: any) => {
   return wss;
 };
 
-export const wssSend = ({ type, data, userId} : { type: string; userId: string; data: any}) => {
+// send message
+export const wssSend = <T>({ type, data, userId }: socketWssSend<T>): void => {
     wss.clients.forEach(client => {
       if ((client as any).userId === userId && client.readyState === 1) {
         client.send(JSON.stringify({ type, userId, data }));

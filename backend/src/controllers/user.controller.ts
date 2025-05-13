@@ -1,13 +1,27 @@
 import { Request, Response } from 'express';
 import User from '../models/user.model';
 import { wssSend } from '../socket/socket';
+import { SOCKET_TYPE } from '../socket/socket-type-enum';
+
+type Post = {
+  id: number;
+  userId: number;
+  title: string;
+  body: string;
+}
 
 export const getUsers = async (_req: Request, res: Response) => {
   try {
     const users = await User.find();
-    // test 1 => 6821ae068ac13f6ccf930e29
-    // test2 => 6821ae0a8ac13f6ccf930e2c
-    wssSend({ type: "userStatus", userId: "6821ae068ac13f6ccf930e29", data: `hello user ${Math.floor(Math.random() * 1000)}` })
+
+    // websocket update
+    wssSend<Post>({ type: SOCKET_TYPE.POST, userId: "6821ae068ac13f6ccf930e29", data: {
+      id: 3,
+      userId: 2,
+      title: `this post edited ${Math.random().toString(36).substring(7)}`,
+      body: `this post edited by websocket ${Math.random().toString(36).substring(7)}`,
+    } })
+
     res.json(users);
   } catch (err) {
     res.status(500).json({ message: 'خطا در دریافت کاربران' });
