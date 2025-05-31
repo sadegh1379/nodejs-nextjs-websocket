@@ -1,6 +1,5 @@
 "use client";
 
-import { usePostSocketSync } from "@/socket/updater-hooks/use-post-socket-sync";
 import {
   useGetPostsQuery
 } from "@/store/slices/post-slice";
@@ -15,10 +14,6 @@ export default function Home() {
   const { data: posts, isLoading } = useGetPostsQuery();
   const { data: userProfile, isLoading: isLoadingUserProfile } =
     useGetUserProfileQuery();
-
-  // websocket sync
-  // usePostSocketSync();
-  // useUserProfileSocketSync();
 
   return (
     <div

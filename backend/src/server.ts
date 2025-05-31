@@ -1,8 +1,6 @@
-import app from './app';
 import dotenv from 'dotenv';
+import app from './app';
 import connectDB from './config/db';
-import { WebSocketServer, WebSocket } from 'ws';
-import jwt from 'jsonwebtoken';
 import { initWebSocket } from './socket/socket';
 
 dotenv.config();
