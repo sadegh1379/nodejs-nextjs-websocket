@@ -45,6 +45,16 @@ export default function Home() {
       className="flex flex-col gap-5 text-center pt-5 bg-gray-800"
       key={pathname}
     >
+
+      <h1 className="text-3xl font-bold text-white">Stream Users</h1>
+      <div className="flex flex-col gap-4 p-4">
+        {users.map((user, index) => (
+          <div key={index} className="bg-gray-700 rounded-lg p-2 shadow-md">
+            <h2 className="text-xl font-semibold text-white mb-2">{user.name}</h2>
+            <p className="text-gray-300">ID: {user.id}</p>
+          </div>
+        ))}
+      </div>
       <h1 className="text-3xl font-bold text-white">WebSocket Demo</h1>
       <Link href={"/test"}>GET TEST PAGE</Link>
 

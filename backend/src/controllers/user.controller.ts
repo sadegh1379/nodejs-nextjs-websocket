@@ -39,9 +39,9 @@ export const getUsers = async (_req: Request, res: Response) => {
 
 export const getUsersStream = async (req: Request, res: Response) => {
   const getUserFromProviderA = () =>
-    new Promise((res) => setTimeout(() => res({ id: 1, name: "Ali" }), 500));
+    new Promise((res) => setTimeout(() => res({ id: 1, name: "Ali" }), 5000));
   const getUserFromProviderB = () =>
-    new Promise((res) => setTimeout(() => res({ id: 2, name: "Sara" }), 5500));
+    new Promise((res) => setTimeout(() => res({ id: 2, name: "Sara" }), 7000));
   const getUserFromProviderC = () =>
     new Promise((res) => setTimeout(() => res({ id: 3, name: "Reza" }), 1000));
   try {
