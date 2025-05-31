@@ -6,14 +6,39 @@ import {
 import { useGetUserProfileQuery } from "@/store/slices/profile-slice";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function Home() {
   const pathname = usePathname();
+  const [users, setUsers] = useState<any[]>([]);
 
   // queries
   const { data: posts, isLoading } = useGetPostsQuery();
   const { data: userProfile, isLoading: isLoadingUserProfile } =
     useGetUserProfileQuery();
+
+    useEffect(() => {
+      const eventSource = new EventSource('http://localhost:5000/api/users/users-stream');
+  
+      eventSource.onmessage = (event) => {
+        const user = JSON.parse(event.data);
+        setUsers((prev) => [...prev, user]);
+      };
+  
+      eventSource.addEventListener('end', () => {
+        console.log('Stream ended');
+        eventSource.close();
+      });
+  
+      eventSource.onerror = (err) => {
+        console.error('SSE Error:', err);
+        eventSource.close();
+      };
+  
+      return () => {
+        eventSource.close();
+      };
+    }, []);
 
   return (
     <div
