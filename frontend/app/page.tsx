@@ -10,12 +10,14 @@ import { usePathname } from "next/navigation";
 
 export default function Home() {
   const pathname = usePathname();
+
+  // queries
   const { data: posts, isLoading } = useGetPostsQuery();
   const { data: userProfile, isLoading: isLoadingUserProfile } =
     useGetUserProfileQuery();
 
   // websocket sync
-  usePostSocketSync();
+  // usePostSocketSync();
   // useUserProfileSocketSync();
 
   return (
