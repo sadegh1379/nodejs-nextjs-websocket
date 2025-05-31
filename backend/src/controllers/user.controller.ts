@@ -23,7 +23,7 @@ export const getUsers = async (_req: Request, res: Response) => {
 
     res.json(users);
   } catch (err) {
-    res.status(500).json({ message: 'خطا در دریافت کاربران' });
+    res.status(500).json({ message: 'Error fetching users' });
   }
 };
 
@@ -34,6 +34,6 @@ export const createUser = async (req: Request, res: Response) => {
     await user.save();
     res.status(201).json(user);
   } catch (err) {
-    res.status(400).json({ message: 'ایجاد کاربر ناموفق بود' });
+    res.status(400).json({ message: 'Failed to create user' });
   }
 };
