@@ -1,8 +1,6 @@
 "use client";
 
-import {
-  useGetPostsQuery
-} from "@/store/slices/post-slice";
+import { useGetPostsQuery } from "@/store/slices/post-slice";
 import { useGetUserProfileQuery } from "@/store/slices/profile-slice";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
